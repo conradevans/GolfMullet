@@ -1,0 +1,54 @@
+.navLabel:hover {
+  text-decoration: underline;
+}
+
+.navLabel {
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+}
+
+.tabContent {
+  text-decoration: none;
+  color: black;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.tabStyle {
+  float: left;
+  padding: 24px 40px;
+  font-size: 15px;
+  font-family: arial;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.columnStyle {
+  display: flex;
+  gap: 40px;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+  scroll-snap-type: x mandatory;
+}
+
+.clothing-card {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  text-align: center;
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 10px;
+}
