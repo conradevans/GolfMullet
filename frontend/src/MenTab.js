@@ -1,9 +1,14 @@
 import NavItemWithDropdown from "./NavItemWithDropDown";
 import { Link } from "react-router-dom";
 
-const MenTab = () => {
+const MenTab = ({ isOpen, onOpen, onClose }) => {
   return (
-    <NavItemWithDropdown label="Men">
+    <NavItemWithDropdown
+      label="Men"
+      isOpen={isOpen}
+      onOpen={onOpen}
+      onClose={onClose}
+    >
       <div className="tabStyle">
         <div className="columnStyle">
           <div>

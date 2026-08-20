@@ -1,28 +1,14 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const NavItemWithDropdown = ({ label, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isOpen) setIsOpen(false);
-    };
-
-    if (isOpen) window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isOpen]);
-
+const NavItemWithDropdown = ({ label, children, isOpen, onOpen, onClose }) => {
   return (
-    <div
-      className="nav-item"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
-    >
+    <div className="nav-item" onMouseEnter={onOpen}>
       <Link
         className="navLabel"
         to={`/browse?filter=${label}`}
-        onClick={() => setIsOpen(false)}
+        onFocus={onOpen}
+        onClick={onClose}
+        aria-expanded={isOpen}
       >
         {label}
       </Link>

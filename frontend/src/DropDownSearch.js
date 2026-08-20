@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 
-const DropDownSearch = ({ clothes }) => {
+const DropDownSearch = ({ clothes, isOpen, onOpen, onClose }) => {
   const allowedFilters = [
     "polo",
     "shirts",
@@ -33,7 +33,6 @@ const DropDownSearch = ({ clothes }) => {
     "accessories",
     "rain",
   ];
-  const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
@@ -43,27 +42,29 @@ const DropDownSearch = ({ clothes }) => {
       )
     : [];
 
+  useEffect(() => {
+    if (!isOpen) setSearch("");
+  }, [isOpen]);
+
   const closeSearch = () => {
-    setIsOpen(false);
+    onClose();
     setSearch("");
   };
 
   return (
-    <div
-      className="search-shell"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={closeSearch}
-    >
-      <Link className="nav-action" to="/browse" aria-label="Search products">
+    <div className="search-shell" onMouseEnter={onOpen}>
+      <Link
+        className="nav-action"
+        to="/browse"
+        aria-label="Search products"
+        aria-expanded={isOpen}
+        onFocus={onOpen}
+      >
         <AiOutlineSearch aria-hidden="true" />
       </Link>
 
       {isOpen && (
-        <div
-          className="search-panel hide-scrollbar"
-          onMouseEnter={() => setIsOpen(true)}
-          onMouseLeave={closeSearch}
-        >
+        <div className="search-panel hide-scrollbar">
           <form
             className="search-form"
             onSubmit={(event) => {
