@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FiShoppingCart } from "react-icons/fi";
@@ -9,14 +9,6 @@ import NewTab from "./NewTab";
 
 const Nav = ({ clothes }) => {
   const [activePanel, setActivePanel] = useState(null);
-
-  useEffect(() => {
-    if (!activePanel) return undefined;
-
-    const closePanels = () => setActivePanel(null);
-    window.addEventListener("scroll", closePanels);
-    return () => window.removeEventListener("scroll", closePanels);
-  }, [activePanel]);
 
   const closePanels = () => setActivePanel(null);
 
