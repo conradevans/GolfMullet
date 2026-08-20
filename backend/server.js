@@ -1,4 +1,4 @@
-// server/server.js
+// backend/server.js
 require("dotenv").config({ path: __dirname + "/.env" });
 const express = require("express");
 const mongoose = require("mongoose");
@@ -13,8 +13,11 @@ const app = express();
 // CORS options
 const corsOptions = {
   origin: [
-    "https://golfmullet.vercel.app", // Vercel frontend
-    "http://localhost:3000", // Local frontend
+    "https://golfmullet.vercel.app",
+    "https://golfmullet-frontend.vercel.app",
+    "https://golfmullet.com",
+    "https://www.golfmullet.com",
+    "http://localhost:3000",
   ],
   credentials: true,
 };
@@ -22,13 +25,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-console.log("URI:", process.env.MONGO_URI);
-
-// Connect to MongoDB
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
 
 // Routes
 app.use("/api/products", productRoutes);
@@ -38,4 +37,30 @@ app.use("/api/users", userRoutes);
 // Use Render's PORT or default to 5050
 const PORT = process.env.PORT || 5050;
 
-app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+const startServer = async () => {
+  const missingEnvVars = ["MONGO_URI", "JWT_SECRET"].filter(
+    (name) => !process.env[name]
+  );
+
+  if (missingEnvVars.length > 0) {
+    throw new Error(
+      `Missing required environment variables: ${missingEnvVars.join(", ")}`
+    );
+  }
+
+  await mongoose.connect(process.env.MONGO_URI);
+  console.log("MongoDB connected");
+
+  return app.listen(PORT, () =>
+    console.log(`Server running on port ${PORT}`)
+  );
+};
+
+if (require.main === module) {
+  startServer().catch((err) => {
+    console.error("Server startup failed:", err.message);
+    process.exit(1);
+  });
+}
+
+module.exports = { app, startServer };
