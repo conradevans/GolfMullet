@@ -5,12 +5,12 @@ import ScrollImagesHome from "./ScrollImagesHome";
 
 const Home = ({ clothes }) => {
   return (
-    <div style={{ width: "100%", margin: 0, padding: 0 }}>
+    <main className="home-page">
       <TopImageHome />
       <SecondImagesHome />
       <ThirdImagesHome />
       <ScrollImagesHome clothes={clothes} />
-    </div>
+    </main>
   );
 };
 

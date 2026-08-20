@@ -1,20 +1,27 @@
-const AccountPage = ({ setIsLoggedIn, logoutUser }) => {
+import { AiOutlineUser } from "react-icons/ai";
+
+const AccountPage = ({ logoutUser }) => {
   return (
-    <div style={{ textAlign: "center", marginTop: "40px" }}>
-      <h1>Account Page</h1>
-      <button
-        onClick={logoutUser}
-        style={{
-          marginTop: "20px",
-          padding: "10px 20px",
-          border: "1px solid #ccc",
-          backgroundColor: "white",
-          cursor: "pointer",
-        }}
-      >
-        Logout
-      </button>
-    </div>
+    <main className="page-shell">
+      <section className="account-card" aria-labelledby="account-title">
+        <div className="account-mark" aria-hidden="true">
+          <AiOutlineUser />
+        </div>
+        <p className="eyebrow">Your profile</p>
+        <h1 id="account-title">My account</h1>
+        <p>
+          You are signed in. Log out when you are finished shopping on this
+          device.
+        </p>
+        <button
+          type="button"
+          className="button button--danger"
+          onClick={logoutUser}
+        >
+          Logout
+        </button>
+      </section>
+    </main>
   );
 };
 

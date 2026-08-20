@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { AiOutlineHeart } from "react-icons/ai";
+import ProductCard from "./ProductCard";
 
 const Favorites = ({ favorites, setFavorites }) => {
   const userId = localStorage.getItem("userId");
@@ -20,67 +22,45 @@ const Favorites = ({ favorites, setFavorites }) => {
 
   if (favorites.length === 0) {
     return (
-      <h2 style={{ fontFamily: "arial", padding: "20px" }}>
-        No favorites yet.
-      </h2>
+      <main className="page-shell">
+        <section className="empty-state">
+          <span className="empty-state__icon" aria-hidden="true">
+            <AiOutlineHeart />
+          </span>
+          <h1>No favorites yet</h1>
+          <p>
+            Save the styles that catch your eye and they will be waiting for you here.
+          </p>
+          <Link className="button button--primary" to="/browse">
+            Explore the collection
+          </Link>
+        </section>
+      </main>
     );
   }
 
   return (
-    <div
-      style={{
-        padding: "40px",
-        display: "flex",
-        flexWrap: "wrap",
-        gap: "30px",
-        justifyContent: "center",
-      }}
-    >
-      {favorites.map((item) => (
-        <div
-          key={item._id}
-          style={{
-            border: "1px solid #ccc",
-            padding: "20px",
-            width: "220px",
-            textAlign: "center",
-            fontFamily: "arial",
-          }}
-        >
-          {/* Wrap only the image and text in Link */}
-          <Link
-            to={`/item/${item.url}`}
-            style={{ textDecoration: "none", color: "black", display: "block" }}
-          >
-            <img
-              src={item.img}
-              alt={item.name}
-              style={{ width: "100%", height: "200px", objectFit: "cover" }}
-            />
-            <p style={{ fontWeight: "bold", margin: "10px 0" }}>{item.name}</p>
-            <p style={{ color: "grey" }}>{item.price}</p>
-          </Link>
+    <main className="page-shell">
+      <header className="page-heading">
+        <p className="eyebrow">Your shortlist</p>
+        <h1>Favorites</h1>
+        <p>All the pieces worth another look, together in one place.</p>
+      </header>
 
-          {/* Button outside the Link to ensure it works */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation(); // Prevent Link from being triggered
-              removeFavorite(item._id);
-            }}
-            style={{
-              marginTop: "10px",
-              border: "1px solid #ccc",
-              backgroundColor: "white",
-              width: "100%",
-              height: "35px",
-              cursor: "pointer",
-            }}
-          >
-            Remove
-          </button>
-        </div>
-      ))}
-    </div>
+      <div className="favorites-grid">
+        {favorites.map((item) => (
+          <ProductCard key={item._id} item={item}>
+            <button
+              className="favorite-remove"
+              type="button"
+              onClick={() => removeFavorite(item._id)}
+            >
+              Remove
+            </button>
+          </ProductCard>
+        ))}
+      </div>
+    </main>
   );
 };
 

@@ -2,161 +2,58 @@ import { Link } from "react-router-dom";
 
 const ThirdImagesHome = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center", // ✅ center outer container
-        marginTop: "20px",
-      }}
-    >
-      <div
-        style={{
-          border: "4px solid white",
-          padding: "10px 20px",
-          width: "100%",
-          maxWidth: "1200px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "2vw",
-            flexWrap: "wrap",
-            alignItems: "flex-start",
-          }}
-        >
-          {/* Image 1 */}
-          <div
-            style={{
-              flex: "0 0 auto",
-              position: "relative",
-              width: "20vw",
-              height: "30vw",
-              maxWidth: "300px",
-              maxHeight: "450px",
-              minWidth: "150px",
-              minHeight: "225px",
-              overflow: "hidden",
-            }}
-          >
-            <Link to="/browse?filter=shorts">
-              <img
-                src="/images/homeimage1.webp"
-                alt="Golf shorts"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block",
-                }}
-              />
-            </Link>
-            <Link to="/browse?filter=shorts">
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "10px",
-                  left: "10px",
-                  color: "white",
-                  fontWeight: "bold",
-                  fontSize: "1.2vw",
-                  fontFamily: "Arial, sans-serif",
-                }}
-              >
-                Shop Shorts
-              </div>
-            </Link>
-          </div>
-
-          {/* Image 2 */}
-          <div
-            style={{
-              flex: "0 0 auto",
-              position: "relative",
-              width: "20vw",
-              height: "30vw",
-              maxWidth: "300px",
-              maxHeight: "450px",
-              minWidth: "150px",
-              minHeight: "225px",
-              overflow: "hidden",
-            }}
-          >
-            <Link to="/browse?filter=polo">
-              <img
-                src="/images/homeimage2.webp"
-                alt="Golf polo"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block",
-                }}
-              />
-            </Link>
-            <Link to="/browse?filter=polo">
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "10px",
-                  left: "10px",
-                  color: "white",
-                  fontWeight: "bold",
-                  fontSize: "1.2vw",
-                  fontFamily: "Arial, sans-serif",
-                }}
-              >
-                Shop Polos
-              </div>
-            </Link>
-          </div>
-
-          {/* Image 3 */}
-          <div
-            style={{
-              flex: "0 0 auto",
-              position: "relative",
-              width: "20vw",
-              height: "30vw",
-              maxWidth: "300px",
-              maxHeight: "450px",
-              minWidth: "150px",
-              minHeight: "225px",
-              overflow: "hidden",
-            }}
-          >
-            <Link to="/browse?filter=shoes">
-              <img
-                src="/images/homeimage3.avif"
-                alt="Running shoes"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block",
-                }}
-              />
-            </Link>
-            <Link to="/browse?filter=shoes">
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "10px",
-                  left: "10px",
-                  color: "white",
-                  fontWeight: "bold",
-                  fontSize: "1.2vw",
-                  fontFamily: "Arial, sans-serif",
-                }}
-              >
-                Shop Runners
-              </div>
-            </Link>
+    <section className="home-section" aria-labelledby="category-heading">
+      <div className="page-width">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Course essentials</p>
+            <h2 id="category-heading">Build your rotation.</h2>
+            <p>
+              Start with the pieces that make getting dressed the easiest part
+              of the day.
+            </p>
           </div>
         </div>
+
+        <div className="category-grid">
+          <Link className="category-card" to="/browse?filter=shorts">
+            <img
+              src="/images/homeimage1.webp"
+              alt="Two golfers celebrating on the course"
+              loading="lazy"
+            />
+            <div className="category-card__content">
+              <span>Move freely</span>
+              <h3>Shop shorts</h3>
+            </div>
+          </Link>
+
+          <Link className="category-card" to="/browse?filter=polo">
+            <img
+              src="/images/homeimage2.webp"
+              alt="Golfer taking a swing in a green polo"
+              loading="lazy"
+            />
+            <div className="category-card__content">
+              <span>The daily uniform</span>
+              <h3>Shop polos</h3>
+            </div>
+          </Link>
+
+          <Link className="category-card" to="/browse?filter=shoes">
+            <img
+              src="/images/homeimage3.avif"
+              alt="Athletic golf footwear"
+              loading="lazy"
+            />
+            <div className="category-card__content">
+              <span>From the ground up</span>
+              <h3>Shop shoes</h3>
+            </div>
+          </Link>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

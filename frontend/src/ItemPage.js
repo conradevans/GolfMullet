@@ -1,5 +1,7 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { AiOutlineHeart } from "react-icons/ai";
+import { FiCheck, FiShoppingBag } from "react-icons/fi";
 
 const ItemPage = ({ clothes, setCart, setFavorites, favorites }) => {
   const { id } = useParams();
@@ -80,118 +82,89 @@ const ItemPage = ({ clothes, setCart, setFavorites, favorites }) => {
     }
   };
 
-  if (!item) return <h2>Item not found</h2>;
+  if (!item) {
+    return (
+      <main className="page-shell">
+        <section className="empty-state">
+          <h1>Item not found</h1>
+          <p>This style may have moved. Browse the current collection to find your next fit.</p>
+          <Link className="button button--primary" to="/browse">
+            Browse collection
+          </Link>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <>
       {notification && (
-        <div
-          style={{
-            position: "fixed",
-            top: "20px",
-            right: "20px",
-            backgroundColor: "#333",
-            color: "#fff",
-            padding: "10px 20px",
-            borderRadius: "5px",
-            zIndex: 1000,
-            fontFamily: "arial",
-          }}
-        >
+        <div className="item-toast" role="status">
+          <FiCheck aria-hidden="true" />
           {notification}
         </div>
       )}
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "10px",
-          padding: "40px",
-        }}
-      >
-        <div>
-          <img
-            src={item.img}
-            alt={item.name}
-            style={{ padding: "40px", width: "300px", height: "450px" }}
-          />
-        </div>
-        <div>
-          <p
-            style={{
-              fontFamily: "arial",
-              padding: "10px",
-              fontSize: "30px",
-              fontWeight: "bold",
-            }}
-          >
-            {item.name}
-          </p>
-          <p style={{ fontFamily: "arial", padding: "10px", color: "grey" }}>
-            {item.price}
-          </p>
-          <p
-            style={{
-              fontFamily: "arial",
-              padding: "10px",
-              textDecoration: "underline",
-            }}
-          >
-            Sizes
-          </p>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              padding: "10px",
-              gap: "10px",
-            }}
-          >
-            {["S", "M", "L"].map((size) => (
+      <main className="page-shell item-page">
+        <nav className="breadcrumbs" aria-label="Breadcrumb">
+          <Link to="/browse">Shop</Link> / {item.name}
+        </nav>
+
+        <div className="item-layout">
+          <div className="item-media">
+            <img src={item.img} alt={item.name} />
+          </div>
+
+          <section className="item-details">
+            <p className="eyebrow">Course to clubhouse</p>
+            <h1>{item.name}</h1>
+            <p className="item-price">{item.price}</p>
+            <p className="item-copy">
+              An easy-wearing staple selected for clean lines, comfortable rounds,
+              and a sharp finish beyond the course.
+            </p>
+
+            <div className="size-header">
+              <span>Select size</span>
+              <span>{selectedSize}</span>
+            </div>
+            <div className="size-options" aria-label="Select a size">
+              {["S", "M", "L"].map((size) => (
+                <button
+                  className={`size-button ${
+                    selectedSize === size ? "is-selected" : ""
+                  }`}
+                  key={size}
+                  type="button"
+                  onClick={() => setSelectedSize(size)}
+                  aria-pressed={selectedSize === size}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+
+            <div className="item-actions">
               <button
-                key={size}
-                onClick={() => setSelectedSize(size)}
-                style={{
-                  backgroundColor: selectedSize === size ? "#ddd" : "white",
-                  border: "1px solid #ccc",
-                  width: "40px",
-                  height: "40px",
-                }}
+                className="button button--primary button--wide"
+                type="button"
+                onClick={addToCart}
               >
-                {size}
+                <FiShoppingBag aria-hidden="true" /> Add to cart
               </button>
-            ))}
-          </div>
-          <div style={{ padding: "10px" }}>
-            <button
-              onClick={addToCart}
-              style={{
-                border: "1px solid #ccc",
-                backgroundColor: "white",
-                width: "120px",
-                height: "40px",
-              }}
-            >
-              Add to Cart
-            </button>
-          </div>
-          <div style={{ padding: "10px" }}>
-            <button
-              onClick={toggleFavorite}
-              style={{
-                border: "1px solid #ccc",
-                backgroundColor: "white",
-                width: "120px",
-                height: "40px",
-              }}
-            >
-              {isFavorited ? "★ Unfavorite" : "☆ Favorite"}
-            </button>
-          </div>
+              <button
+                className="button button--secondary button--wide"
+                type="button"
+                onClick={toggleFavorite}
+                aria-pressed={Boolean(isFavorited)}
+              >
+                <AiOutlineHeart aria-hidden="true" />
+                {isFavorited ? "Remove from favorites" : "Add to favorites"}
+              </button>
+            </div>
+          </section>
         </div>
-      </div>
+      </main>
     </>
   );
 };

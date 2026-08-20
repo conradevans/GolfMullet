@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { FiShoppingBag, FiTrash2 } from "react-icons/fi";
+
 const Cart = ({ cart, setCart }) => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
@@ -76,68 +79,89 @@ const Cart = ({ cart, setCart }) => {
 
   if (cart.length === 0) {
     return (
-      <h2 style={{ fontFamily: "arial", padding: "20px" }}>
-        Your cart is empty.
-      </h2>
+      <main className="page-shell">
+        <section className="empty-state">
+          <span className="empty-state__icon" aria-hidden="true">
+            <FiShoppingBag />
+          </span>
+          <h1>Your cart is empty</h1>
+          <p>Find something that plays as well off the course as it does on it.</p>
+          <Link className="button button--primary" to="/browse">
+            Shop the collection
+          </Link>
+        </section>
+      </main>
     );
   }
 
   return (
-    <div style={{ padding: "40px", fontFamily: "arial" }}>
-      <h2>Shopping Cart</h2>
-      {cart.map((item, index) => (
-        <div
-          key={`${item._id}-${item.size}`}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            borderBottom: "1px solid #ccc",
-            padding: "20px 0",
-            gap: "20px",
-          }}
-        >
-          <img
-            src={item.img}
-            alt={item.name}
-            style={{ width: "120px", height: "150px", objectFit: "cover" }}
-          />
-          <div style={{ flex: 1 }}>
-            <p style={{ fontWeight: "bold", fontSize: "18px" }}>{item.name}</p>
-            <p style={{ color: "grey" }}>{item.price}</p>
-            <p>Size: {item.size}</p>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <button onClick={() => updateQuantity(index, -1)}>-</button>
-              <span>{item.quantity}</span>
-              <button onClick={() => updateQuantity(index, 1)}>+</button>
-            </div>
-            <button
-              onClick={() => removeItem(item._id, item.size)}
-              style={{
-                marginTop: "10px",
-                background: "white",
-                border: "1px solid #ccc",
-              }}
-            >
-              Remove
-            </button>
+    <main className="page-shell">
+      <header className="page-heading">
+        <p className="eyebrow">Ready when you are</p>
+        <h1>Your cart</h1>
+        <p>Review your sizes and quantities before wrapping up.</p>
+      </header>
+
+      <div className="cart-layout">
+        <section className="cart-items" aria-label="Cart items">
+          {cart.map((item, index) => (
+            <article className="cart-item" key={`${item._id}-${item.size}`}>
+              <div className="cart-item__media">
+                <img src={item.img} alt={item.name} />
+              </div>
+              <div>
+                <h3>{item.name}</h3>
+                <p className="cart-item__price">{item.price}</p>
+                <p className="cart-item__meta">Size {item.size}</p>
+                <div className="quantity-control" aria-label={`${item.name} quantity`}>
+                  <button
+                    type="button"
+                    onClick={() => updateQuantity(index, -1)}
+                    aria-label={`Decrease ${item.name} quantity`}
+                  >
+                    −
+                  </button>
+                  <span aria-live="polite">{item.quantity}</span>
+                  <button
+                    type="button"
+                    onClick={() => updateQuantity(index, 1)}
+                    aria-label={`Increase ${item.name} quantity`}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              <button
+                className="cart-remove"
+                type="button"
+                onClick={() => removeItem(item._id, item.size)}
+              >
+                <FiTrash2 aria-hidden="true" /> Remove
+              </button>
+            </article>
+          ))}
+        </section>
+
+        <aside className="cart-summary">
+          <h2>Order summary</h2>
+          <div className="cart-summary__row">
+            <span>Items</span>
+            <span>{cart.reduce((count, item) => count + item.quantity, 0)}</span>
           </div>
-        </div>
-      ))}
-      <h3 style={{ marginTop: "30px" }}>Total: ${totalPrice.toFixed(2)}</h3>
-      <button
-        onClick={checkout}
-        style={{
-          marginTop: "10px",
-          padding: "10px 20px",
-          fontSize: "16px",
-          backgroundColor: "#000",
-          color: "#fff",
-          border: "none",
-        }}
-      >
-        Checkout
-      </button>
-    </div>
+          <div className="cart-summary__row cart-summary__row--total">
+            <span>Total</span>
+            <span>${totalPrice.toFixed(2)}</span>
+          </div>
+          <button
+            className="button button--light button--wide"
+            type="button"
+            onClick={checkout}
+          >
+            Checkout
+          </button>
+        </aside>
+      </div>
+    </main>
   );
 };
 

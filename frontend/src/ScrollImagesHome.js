@@ -1,31 +1,30 @@
 import { Link } from "react-router-dom";
+import ProductCard from "./ProductCard";
 
 const ScrollImagesHome = ({ clothes }) => {
   return (
-    <div className="scroll-container">
-      {clothes.map((item) => (
-        <Link
-          key={item._id || item.url} // Use MongoDB _id if available, fallback to URL
-          to={`/item/${item.url}`}
-          style={{
-            textDecoration: "none",
-            color: "inherit",
-            flex: "0 0 auto",
-          }}
-        >
-          <div className="clothing-card">
-            <img
-              src={item.img}
-              alt={item.name}
-              width="200"
-              height="200"
-              style={{ borderRadius: "8px" }}
-            />
-            <p style={{ fontFamily: "arial" }}>{item.name}</p>
+    <section className="home-section home-section--paper">
+      <div className="page-width">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Fresh off the fairway</p>
+            <h2>Clubhouse favorites.</h2>
+            <p>
+              Reliable layers, easy color, and shoes ready to go the distance.
+            </p>
           </div>
-        </Link>
-      ))}
-    </div>
+          <Link className="text-link" to="/browse">
+            Shop all products
+          </Link>
+        </div>
+
+        <div className="product-rail">
+          {clothes.map((item) => (
+            <ProductCard key={item._id || item.url} item={item} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 

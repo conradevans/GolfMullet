@@ -2,59 +2,32 @@ import { Link } from "react-router-dom";
 
 const TopImageHome = () => {
   return (
-    <div
-      style={{
-        position: "relative",
-        width: "100%",
-        height: "575px",
-        overflow: "hidden",
-      }}
-    >
-      <Link to="browse">
+    <section className="hero" aria-labelledby="home-hero-title">
+      <Link
+        className="hero__media-link"
+        to="/browse"
+        aria-label="Shop all Golf Mullet styles"
+      >
         <img
-          src="/images/GolfBallStockImage.jpg"
-          alt="Golf ball"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            display: "block",
-          }}
+          className="hero__image"
+          src="/images/golf-hero.jpg"
+          alt="Golf ball resting beside the flag on a green"
         />
       </Link>
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          textAlign: "center",
-          color: "black",
-          fontFamily: "arial",
-        }}
-      >
-        <Link to="browse" style={{ textDecoration: "none", color: "black" }}>
-          <h2>
-            <strong>SUMMER READY</strong>
-          </h2>
-          <p
-            to="/browse"
-            style={{
-              padding: "10px 20px",
-              fontSize: "16px",
-              cursor: "pointer",
-              border: "none",
-              borderRadius: "5px",
-              backgroundColor: "#000",
-              color: "#fff",
-              textDecoration: "none",
-            }}
-          >
-            Shop
-          </p>
+
+      <div className="hero__content">
+        <p className="hero__eyebrow">Golf style, loosened up</p>
+        <h1 id="home-hero-title">Ready for the round. Built for after.</h1>
+        <p className="hero__copy">
+          Easygoing course essentials for early tee times, long afternoons,
+          and whatever comes next.
+        </p>
+        <Link className="button button--light" to="/browse">
+          Shop the collection
         </Link>
+        <p className="hero__note">The summer edit</p>
       </div>
-    </div>
+    </section>
   );
 };
 

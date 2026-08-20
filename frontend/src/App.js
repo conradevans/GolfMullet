@@ -1,4 +1,3 @@
-import "./index.css";
 import Header from "./Header";
 import NavWithTab from "./NavWithTab";
 import Home from "./Home";
@@ -127,47 +126,54 @@ function App() {
   }, [userId, token]);
 
   return (
-    <div>
-      <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+    <div className="app-shell">
+      <Header isLoggedIn={isLoggedIn} />
       <NavWithTab clothes={clothes} />
-      <Routes>
-        <Route path="/" element={<Home clothes={clothes} />} />
-        <Route
-          path="/favorites"
-          element={
-            <Favorites
-              clothes={clothes}
-              favorites={favorites}
-              setFavorites={setFavorites}
-            />
-          }
-        />
-        <Route
-          path="/cart"
-          element={<Cart clothes={clothes} cart={cart} setCart={setCart} />}
-        />
-        <Route
-          path="/signin"
-          element={<SignIn setIsLoggedIn={setIsLoggedIn} />}
-        />
-        <Route
-          path="/account"
-          element={<AccountPage setIsLoggedIn={setIsLoggedIn} logoutUser={logoutUser} />}
-        />
-        <Route path="/browse" element={<Browse clothes={clothes} />} />
-        <Route
-          path="/item/:id"
-          element={
-            <ItemPage
-              clothes={clothes}
-              favorites={favorites}
-              setFavorites={setFavorites}
-              setCart={setCart}
-            />
-          }
-        />
-        <Route path="*" element={<Missing />} />
-      </Routes>
+      <div className="app-content">
+        <Routes>
+          <Route path="/" element={<Home clothes={clothes} />} />
+          <Route
+            path="/favorites"
+            element={
+              <Favorites
+                clothes={clothes}
+                favorites={favorites}
+                setFavorites={setFavorites}
+              />
+            }
+          />
+          <Route
+            path="/cart"
+            element={<Cart clothes={clothes} cart={cart} setCart={setCart} />}
+          />
+          <Route
+            path="/signin"
+            element={<SignIn setIsLoggedIn={setIsLoggedIn} />}
+          />
+          <Route
+            path="/account"
+            element={
+              <AccountPage
+                setIsLoggedIn={setIsLoggedIn}
+                logoutUser={logoutUser}
+              />
+            }
+          />
+          <Route path="/browse" element={<Browse clothes={clothes} />} />
+          <Route
+            path="/item/:id"
+            element={
+              <ItemPage
+                clothes={clothes}
+                favorites={favorites}
+                setFavorites={setFavorites}
+                setCart={setCart}
+              />
+            }
+          />
+          <Route path="*" element={<Missing />} />
+        </Routes>
+      </div>
       <Footer />
     </div>
   );

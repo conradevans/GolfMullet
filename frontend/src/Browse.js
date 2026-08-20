@@ -1,5 +1,7 @@
-import { useSearchParams, Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { FiSliders } from "react-icons/fi";
+import ProductCard from "./ProductCard";
 
 const allowedFilters = [
   "polo",
@@ -173,16 +175,28 @@ const Browse = ({ clothes }) => {
   };
 
   return (
-    <div style={{ display: "flex", padding: "20px" }}>
-      <div style={{ width: "20%" }}>
-        {Object.entries(checkboxGroups).map(([group, options]) => (
-          <div key={group} style={{ marginBottom: "20px" }}>
-            <h4>{group}</h4>
-            {options.map((option) => (
-              <div key={option}>
-                <label
-                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
-                >
+    <main className="page-shell">
+      <header className="shop-header">
+        <div className="page-heading">
+          <p className="eyebrow">The lineup</p>
+          <h1>Shop all</h1>
+          <p>Polished golf essentials made for the round and whatever follows.</p>
+        </div>
+        <p className="shop-count">
+          {filteredClothes.length} {filteredClothes.length === 1 ? "style" : "styles"}
+        </p>
+      </header>
+
+      <div className="shop-layout">
+        <aside className="filters-panel" aria-label="Product filters">
+          <h2 className="filters-panel__title">
+            <FiSliders aria-hidden="true" /> Filters
+          </h2>
+          {Object.entries(checkboxGroups).map(([group, options]) => (
+            <fieldset className="filter-group" key={group}>
+              <legend>{group}</legend>
+              {options.map((option) => (
+                <label className="filter-option" key={option}>
                   <input
                     type="checkbox"
                     checked={
@@ -203,98 +217,59 @@ const Browse = ({ clothes }) => {
                   />
                   {option.charAt(0).toUpperCase() + option.slice(1)}
                 </label>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-
-      <div style={{ width: "80%", paddingLeft: "40px" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: "10px",
-              maxWidth: "70%",
-            }}
-          >
-            {activeFilters.map((f, index) => (
-              <span
-                key={index}
-                style={{
-                  backgroundColor: "#eee",
-                  padding: "5px 10px",
-                  borderRadius: "15px",
-                  fontFamily: "arial",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "5px",
-                }}
-              >
-                {f} <button onClick={() => handleRemoveFilter(f)}>×</button>
-              </span>
-            ))}
-          </div>
-
-          <div>
-            <select
-              value={selectedOption}
-              onChange={handleSelectChange}
-              style={{ padding: "5px 10px", fontSize: "16px" }}
-            >
-              <option value="">-- Select --</option>
-              {dropdownOptions.map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt.charAt(0).toUpperCase() + opt.slice(1)}
-                </option>
               ))}
-            </select>
-          </div>
-        </div>
+            </fieldset>
+          ))}
+        </aside>
 
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "20px",
-            marginTop: "30px",
-          }}
-        >
-          {filteredClothes.length > 0 ? (
-            filteredClothes.map((item) => (
-              <Link
-                to={`/item/${item.url}`}
-                key={item.id}
-                style={{
-                  width: "200px",
-                  textAlign: "center",
-                  fontFamily: "arial",
-                  textDecoration: "none",
-                  color: "inherit",
-                }}
+        <section aria-label="Products">
+          <div className="shop-toolbar">
+            <div className="filter-chips" aria-label="Active filters">
+              {activeFilters.map((activeFilter) => (
+                <span className="filter-chip" key={activeFilter}>
+                  {activeFilter}
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveFilter(activeFilter)}
+                    aria-label={`Remove ${activeFilter} filter`}
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+
+            <label>
+              <span className="sr-only">Collection</span>
+              <select
+                className="shop-select"
+                value={selectedOption}
+                onChange={handleSelectChange}
               >
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  style={{ width: "100%", height: "200px", objectFit: "cover" }}
-                />
-                <p>{item.name}</p>
-                <p>{item.price}</p>
-              </Link>
-            ))
-          ) : (
-            <p>No results match your filters.</p>
-          )}
-        </div>
+                <option value="">All collections</option>
+                {dropdownOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option.charAt(0).toUpperCase() + option.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+
+          <div className="product-grid">
+            {filteredClothes.length > 0 ? (
+              filteredClothes.map((item) => (
+                <ProductCard key={item._id || item.id || item.url} item={item} />
+              ))
+            ) : (
+              <p className="product-grid__empty">
+                No results match your filters. Try removing a filter to see more.
+              </p>
+            )}
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 

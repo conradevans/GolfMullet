@@ -59,53 +59,72 @@ const SignIn = ({ setIsLoggedIn }) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "400px",
-        gap: "10px",
-      }}
-    >
-      <input
-        type="text"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        style={{ height: "30px", width: "150px" }}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        style={{ height: "30px", width: "150px" }}
-      />
-      <button
-        onClick={handleLogin}
-        style={{
-          border: "1px solid #ccc",
-          backgroundColor: "white",
-          width: "120px",
-          height: "40px",
-        }}
-      >
-        Sign In
-      </button>
-      <button
-        onClick={handleRegister}
-        style={{
-          border: "1px solid #ccc",
-          backgroundColor: "white",
-          width: "120px",
-          height: "40px",
-        }}
-      >
-        Register
-      </button>
-    </div>
+    <main className="auth-page" aria-labelledby="auth-title">
+      <section className="auth-visual" aria-label="Golf Mullet community">
+        <img src="/images/homeimage1.webp" alt="Golfers enjoying a round together" />
+        <div className="auth-visual__copy">
+          <h2>Find your course-ready fit.</h2>
+          <p>
+            Sign in to keep your favorites and cart ready for your next round.
+          </p>
+        </div>
+      </section>
+
+      <section className="auth-card">
+        <p className="eyebrow">Your account</p>
+        <h1 id="auth-title">Welcome back</h1>
+        <p className="auth-card__intro" id="auth-intro">
+          Enter your details to sign in, or register with the same details to
+          create an account.
+        </p>
+
+        <div className="form-field">
+          <label htmlFor="signin-email">Email address</label>
+          <input
+            id="signin-email"
+            className="form-input"
+            type="text"
+            inputMode="email"
+            autoComplete="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            aria-describedby="auth-intro"
+          />
+        </div>
+
+        <div className="form-field">
+          <label htmlFor="signin-password">Password</label>
+          <input
+            id="signin-password"
+            className="form-input"
+            type="password"
+            autoComplete="current-password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            aria-describedby="auth-intro"
+          />
+        </div>
+
+        <div className="auth-actions">
+          <button
+            type="button"
+            className="button button--primary button--wide"
+            onClick={handleLogin}
+          >
+            Sign In
+          </button>
+          <button
+            type="button"
+            className="button button--secondary button--wide"
+            onClick={handleRegister}
+          >
+            Register
+          </button>
+        </div>
+      </section>
+    </main>
   );
 };
 
