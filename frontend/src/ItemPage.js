@@ -5,19 +5,19 @@ const ItemPage = ({ clothes, setCart, setFavorites, favorites }) => {
   const { id } = useParams();
   const userId = localStorage.getItem("userId");
   const item = clothes.find((c) => c.url === id);
+  const itemId = item?._id;
   const [isFavorited, setIsFavorited] = useState();
   const token = localStorage.getItem("token");
   const [selectedSize, setSelectedSize] = useState("M");
   const [notification, setNotification] = useState("");
-  const [notifTimeout, setNotifTimeout] = useState(null);
 
   useEffect(() => {
-    if (!favorites) {
+    if (!favorites || !itemId) {
       setIsFavorited(false);
       return;
     }
-    setIsFavorited(favorites.some((fav) => fav._id === item._id));
-  }, []);
+    setIsFavorited(favorites.some((fav) => fav._id === itemId));
+  }, [favorites, itemId]);
 
   const addToCart = async () => {
     if (!userId) return alert("Please sign in first");

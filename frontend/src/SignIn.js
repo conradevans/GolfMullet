@@ -6,13 +6,6 @@ const SignIn = ({ setIsLoggedIn }) => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  
-  const handleLogout = () => {
-    localStorage.setItem("loggedIn", "false");
-    setIsLoggedIn(false);
-    navigate("/signin");
-  };
-
   const handleLogin = async () => {
     try {
       const res = await fetch(

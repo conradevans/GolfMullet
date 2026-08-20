@@ -43,7 +43,7 @@ const ThirdImagesHome = () => {
             <Link to="/browse?filter=shorts">
               <img
                 src="/images/homeimage1.webp"
-                alt="Image 1"
+                alt="Golf shorts"
                 style={{
                   width: "100%",
                   height: "100%",
@@ -86,7 +86,7 @@ const ThirdImagesHome = () => {
             <Link to="/browse?filter=polo">
               <img
                 src="/images/homeimage2.webp"
-                alt="Image 2"
+                alt="Golf polo"
                 style={{
                   width: "100%",
                   height: "100%",
@@ -129,7 +129,7 @@ const ThirdImagesHome = () => {
             <Link to="/browse?filter=shoes">
               <img
                 src="/images/homeimage3.avif"
-                alt="Image 3"
+                alt="Running shoes"
                 style={{
                   width: "100%",
                   height: "100%",

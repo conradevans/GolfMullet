@@ -1,8 +1,4 @@
-import { useNavigate } from "react-router-dom";
-
 const AccountPage = ({ setIsLoggedIn, logoutUser }) => {
-  const navigate = useNavigate();
-
   return (
     <div style={{ textAlign: "center", marginTop: "40px" }}>
       <h1>Account Page</h1>

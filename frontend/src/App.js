@@ -11,7 +11,7 @@ import Browse from "./Browse";
 import ItemPage from "./ItemPage";
 import AccountPage from "./AccountPage";
 import { Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +19,7 @@ function App() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [clothes, setClothes] = useState([]);
-  const [user, setUser] = useState(null);
+  const [, setUser] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [cart, setCart] = useState([]);
 
@@ -30,6 +30,19 @@ function App() {
   useEffect(() => {
     setIsLoggedIn(localStorage.getItem("loggedIn") === "true");
   }, []);
+
+  const logoutUser = useCallback(() => {
+    console.log("userlogged out");
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.setItem("loggedIn", "false");
+    setIsLoggedIn(false);
+    setUser(null);
+    setFavorites([]);
+    setCart([]);
+    navigate("/signin");
+    // Optionally redirect to sign-in here
+  }, [navigate]);
 
   // Token expiration effect — logs out user when token expires
   useEffect(() => {
@@ -57,20 +70,7 @@ function App() {
     const intervalId = setInterval(checkTokenExpiration, 60000);
 
     return () => clearInterval(intervalId);
-  }, []);
-
-  const logoutUser = () => {
-    console.log("userlogged out");
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    localStorage.setItem("loggedIn", "false");
-    setIsLoggedIn(false);
-    setUser(null);
-    setFavorites([]);
-    setCart([]);
-    navigate("/signin");
-    // Optionally redirect to sign-in here
-  };
+  }, [logoutUser]);
 
   // Fetch clothes as before
   useEffect(() => {

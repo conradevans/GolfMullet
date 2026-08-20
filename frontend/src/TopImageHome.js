@@ -13,7 +13,7 @@ const TopImageHome = () => {
       <Link to="browse">
         <img
           src="/images/GolfBallStockImage.jpg"
-          alt="Golf Ball Image"
+          alt="Golf ball"
           style={{
             width: "100%",
             height: "100%",
